@@ -1,10 +1,7 @@
-return function(calledByRandom, EntitiesFunctions)
-    if calledByRandom==true then
-        return EntitiesFunctions[math.random(1,#EntitiesFunctions)](true)
-    end
-    for entity,_ in pairs(EntitiesFunctions) do
+return function(_,_,_,_,_,spawnEntity, entities)
+    for _, entity in pairs(entities.AllEntities) do
         if entity~="All" and entity~="Random" then
-            EntitiesFunctions[entity]()
+            spawnEntity(entity)
         end
     end
 end
