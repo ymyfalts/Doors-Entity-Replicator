@@ -1,4 +1,4 @@
-return function(_,CanEntityKill,_m_,Creator)
+return function(_,CanEntityKill,_,_,Creator)
 	local L_1_ = Creator.createEntity({
 		CustomName = "Trashbag", -- Custom name of your entity
 		Model = "rbxassetid://11623808411", -- Can be GitHub file or rbxassetid
