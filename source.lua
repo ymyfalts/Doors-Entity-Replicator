@@ -972,7 +972,7 @@ Tools:CreateButton({
             newdoor.Model:PivotTo(room.Door.Door.CFrame)
             newdoor.Model.Parent=room
             room.Door:Destroy()
-            thing.ReplicateDoor({Model=newdoor.Model, Config={}, Debug={OnDoorPreOpened=function() end}})
+            thing.ReplicateDoor({Model=newdoor.Model, Config={CustomKeyNames={"SkellyKey"}}, Debug={OnDoorPreOpened=function() end}})
         end
         keyTool.Equipped:Connect(function()
             for _, room in pairs(workspace.CurrentRooms:GetChildren()) do
