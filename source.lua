@@ -319,12 +319,14 @@ publicServers:CreateButton({
     Callback=function()
         game.Players.LocalPlayer:Kick("\nJoining Special Server... Please Wait")
 		wait()
+        queue_on_teleport("loadstring(game:HttpGet\"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/source.lua\")()")
 		game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
     end
 })
 publicServers:CreateButton({
     Name="Free Revive",
     Callback=function()
+        queue_on_teleport("loadstring(game:HttpGet\"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/source.lua\")()")
 		game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer)
     end
 })
@@ -335,6 +337,7 @@ publicServers:CreateButton({
 	Callback = function()
         local tb=game:GetService("HttpService"):JSONDecode(game:HttpGet(("https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=Asc&limit=100"):format(tostring(game.PlaceId))))
         game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, tb.data[math.random(1,#tb.data)].id, game.Players.LocalPlayer)
+        queue_on_teleport("loadstring(game:HttpGet\"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/source.lua\")()")
     end,
 })
 publicServers:CreateInput({
@@ -347,6 +350,7 @@ publicServers:CreateInput({
             for _, player in pairs(server.players) do
                 if player.name==Text or player.UserId==Text then
                     game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, server.id, game.Players.LocalPlayer)
+                    queue_on_teleport("loadstring(game:HttpGet\"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/source.lua\")()")
                 end
             end
         end
@@ -358,6 +362,7 @@ publicServers:CreateInput({
 	RemoveTextAfterFocusLost = false,
 	Callback = function(Text)
         game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, Text, game.Players.LocalPlayer)
+        queue_on_teleport("loadstring(game:HttpGet\"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/source.lua\")()")
     end,
 })
 --#endregion
