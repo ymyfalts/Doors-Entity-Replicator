@@ -955,12 +955,50 @@ Tools:CreateParagraph({Title = "NOTE", Content = "These are fake vitamins but wo
 --#endregion
 
 --#region Skeleton Key
+local con
 Tools:CreateButton({
     Name="Obtain Skeleton Key",
     Callback=function()
-        local uses=5
+        if not isfile("skellyKey.rbxm") then
+            writefile("skellyKey.rbxm", game:HttpGet"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/skellyKey.rbxm")
+        end
         local keyTool: Tool=game:GetObjects((getcustomasset or getsynasset)("skellyKey.rbxm"))[1]
-        keyTool.Parent=game.Players.LocalPlayer.Backpack
+        keyTool:SetAttribute("uses", 5)
+
+        local function setupRoom(room)
+            local thing=loadstring(game:HttpGet"https://raw.githubusercontent.com/sponguss/Doors-Entity-Replicator/main/skellyKeyRoomRep.lua")()
+            local newdoor=thing.CreateDoor({CustomKeyNames={"SkellyKey"}, Sign=true, Light=true, Locked=true})
+            newdoor.Model.Parent=workspace
+            newdoor.Model:PivotTo(room.Door.Door.CFrame)
+            newdoor.Model.Parent=room
+            room.Door:Destroy()
+            thing.ReplicateDoor({Model=newdoor.Model, Config={}, Debug={OnDoorPreOpened=function() end}})
+        end
+        keyTool.Equipped:Connect(function()
+            for _, room in pairs(workspace.CurrentRooms:GetChildren()) do
+                if room.Door:FindFirstChild"Lock" and not room:GetAttribute("Replaced") then
+                    room:SetAttribute("Replaced", true)
+                    setupRoom(room)
+                end
+            end
+            con=workspace.CurrentRooms.ChildAdded:Connect(function(room)
+                if room.Door:FindFirstChild"Lock" and not room:GetAttribute("Replaced") then
+                    room:SetAttribute("Replaced", true)
+                    setupRoom(room)
+                end
+            end)
+        end)
+        keyTool.Unequipped:Connect(function() con:Disconnect() end)
+
+        if Plr.PlayerGui.MainUI.ItemShop.Visible then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Shop%20Items/Source.lua"))().CreateItem(keyTool, {
+                Title = "Skeleton Key",
+                Desc = "Five uses, holds secrets",
+                Image = "https://static.wikia.nocookie.net/doors-game/images/8/88/Icon_crucifix2.png/revision/latest/scale-to-width-down/350?cb=20220728033038",
+                Price = 100,
+                Stack = 1,
+            })
+        else keyTool.Parent=game.Players.LocalPlayer.Backpack end
     end
 })
 --#endregion
@@ -985,6 +1023,15 @@ Tools:CreateButton({
                 }
             }
         })
+    end
+})
+--#endregion
+
+--#region Christmas Guns
+Tools:CreateButton({
+    Name="Obtain Christmas Weaponry",
+    Callback=function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/NotTypicalAdmin/ChristmasGuns/main/main"))()
     end
 })
 --#endregion
@@ -1284,7 +1331,7 @@ global:CreateButton({
 })
 global:CreateParagraph({Title="Functionality", Content="The button \"Agressive Figure\" will make figure know where each player is... This will make door 50 incredibly harder. IF THIS IS USED IN SINGLEPLAYER, FIGURE WILL BE DELETED MOST LIKELY"})
 --#endregion
---#region Developing
+--#region IN-DEV, DO NOT TOUCH.
 -- local chatCon
 
 -- misc:CreateToggle({
